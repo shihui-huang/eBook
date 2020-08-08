@@ -1,19 +1,9 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <span class="text">TEST</span>
-      <!-- <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link> -->
-    </div>
-    <router-view />
-  </div>
+  <div id="app"><router-view /></div>
 </template>
 <script>
-}
+export default {}
 
-#nav {
-  padding: 30px;
-}
 document.addEventListener('DOMContentLoaded', () => {
   const html = document.querySelector('html')
   let fontSize = window.innerWidth / 10
@@ -21,10 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
   html.style.fontSize = fontSize + 'px'
 })
 </script>
-<style scoped>
+<style lang="scss" scoped>
 @import './assets/styles/global.scss';
-.text {
-  font-family: 'Days one';
-  font-size: px2rem(20);
+#app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 </style>
