@@ -1,6 +1,11 @@
 <template>
   <div class="ebook-reader">
     <div id="read"></div>
+    <!-- Click to switch pages -->
+    <!-- <div class="mask">
+      <div class="left" @touchstart="prevPage"></div>
+      <div class="right" @click="nextPage"></div>
+    </div> -->
   </div>
 </template>
 
@@ -26,7 +31,56 @@ export default {
         snap: true
       })
       this.rendition.display()
+      // Slide to switch pages 
+      
+      this.rendition.on('touchstart', (event) => {
+        console.log(event)
+        // 获取一只手指点击屏幕的x轴位置
+        // Get the x-axis position of one finger on the screen
+        this.touchStartX = event.changedTouches[0].clientX
+        // 获取手指点击时间来判断是否是手指长按屏幕事件
+        // Get the finger tap time to determine whether it is a long finger press event
+        this.touchStartTime = event.timeStamp
+      })
+      this.rendition.on('touchend', (event) => {
+        // 离开屏幕时获得x轴的偏移量
+        // Get the x-axis offset when leaving the screen
+        const offsetX = event.changedTouches[0].clientX - this.touchStartX
+        // 手指滑动的时间
+        // Finger sliding time
+        const time = event.timeStamp - this.touchStartTime
+        // 判断滑动方向和方式
+        // Determine the direction and method of sliding
+        // 如果滑动时间小于500毫秒，偏移量大于40时我们进入上一页
+        // if sliding time is less than 500 milliseconds, and the offet is greater than 40, we return to previous page
+        if (time < 500 && offsetX > 40) {
+          this.prevPage()
+        } else if (time < 500 && offsetX < -40) {
+          // 切换到下一页
+          // switch to next page
+          this.nextPage()
+        } else {
+          // 显示标题和菜单栏
+          // Show title and menu bar
+          this.showTitleAndMenu()
+        }
+        // 禁止默认事件和方法调用
+        // Disallow default events and method calls
+        event.preventDefault()
+        event.stopPropagation()
+      })
     },
+    prevPage(event) {
+      if (this.rendition) {
+        this.rendition.prev()
+      }
+    },
+    nextPage() {
+      if (this.rendition) {
+        this.rendition.next()
+      }
+    },
+  },
   mounted() {
     const baseUrl = 'http://localhost:8081/epub/'
     const fileName = this.$route.params.fileName.split('|').join('/')
@@ -40,4 +94,25 @@ export default {
 
 <style lang="scss" rel="stylesheet/scss" scoped>
 @import '../../assets/styles/global.scss';
+.ebook-reader {
+  position: relative;
+  .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    .left {
+      flex: 0 0 px2rem(100);
+    }
+    .center {
+      flex: 1;
+    }
+    .right {
+      flex: 0 0 px2rem(100);
+    }
+  }
+}
 </style>
