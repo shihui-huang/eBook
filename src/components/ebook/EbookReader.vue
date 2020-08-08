@@ -74,11 +74,13 @@ export default {
     prevPage(event) {
       if (this.rendition) {
         this.rendition.prev()
+        this.$store.dispatch('setMenuVisible', false)
       }
     },
     nextPage() {
       if (this.rendition) {
         this.rendition.next()
+        this.$store.dispatch('setMenuVisible', false)
       }
     },
     showTitleAndMenu() {
