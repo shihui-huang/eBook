@@ -4,6 +4,7 @@
     <!-- Click to switch pages -->
     <!-- <div class="mask">
       <div class="left" @touchstart="prevPage"></div>
+      <div class="center" @click="showTitleAndMenu"></div>
       <div class="right" @click="nextPage"></div>
     </div> -->
   </div>
@@ -15,7 +16,7 @@ import { mapGetters } from 'vuex'
 global.ePub = Epub
 export default {
   computed: {
-    ...mapGetters(['fileName'])
+    ...mapGetters(['fileName', 'menuVisible'])
   },
   methods: {
     initEpub() {
@@ -31,8 +32,8 @@ export default {
         snap: true
       })
       this.rendition.display()
-      // Slide to switch pages 
-      
+      // Slide to switch pages
+
       this.rendition.on('touchstart', (event) => {
         console.log(event)
         // 获取一只手指点击屏幕的x轴位置
@@ -80,6 +81,9 @@ export default {
         this.rendition.next()
       }
     },
+    showTitleAndMenu() {
+      this.$store.dispatch('setMenuVisible', !this.menuVisible)
+    }
   },
   mounted() {
     const baseUrl = 'http://localhost:8081/epub/'
