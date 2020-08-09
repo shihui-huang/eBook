@@ -11,13 +11,11 @@
 </template>
 
 <script>
+import { ebookMixin } from '../../utils/mixin'
 import Epub from 'epubjs'
-import { mapGetters } from 'vuex'
 global.ePub = Epub
 export default {
-  computed: {
-    ...mapGetters(['fileName', 'menuVisible'])
-  },
+  mixins: [ebookMixin],
   methods: {
     initEpub() {
       const url = 'http://localhost:8081/epub/' + this.fileName + '.epub'
