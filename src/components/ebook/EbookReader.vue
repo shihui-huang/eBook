@@ -12,13 +12,11 @@
 
 <script>
 import { ebookMixin } from '../../utils/mixin'
-import { mapActions } from 'vuex'
 import Epub from 'epubjs'
 global.ePub = Epub
 export default {
   mixins: [ebookMixin],
   methods: {
-    ...mapActions(['setMenuVisible', 'setFileName']),
     initEpub() {
       const url = 'http://localhost:8081/epub/' + this.fileName + '.epub'
       this.book = new Epub(url)
