@@ -12,11 +12,13 @@
 
 <script>
 import { ebookMixin } from '../../utils/mixin'
+import { mapActions } from 'vuex'
 import Epub from 'epubjs'
 global.ePub = Epub
 export default {
   mixins: [ebookMixin],
   methods: {
+    ...mapActions(['setMenuVisible', 'setFileName']),
     initEpub() {
       const url = 'http://localhost:8081/epub/' + this.fileName + '.epub'
       this.book = new Epub(url)
@@ -72,23 +74,29 @@ export default {
     prevPage(event) {
       if (this.rendition) {
         this.rendition.prev()
-        this.$store.dispatch('setMenuVisible', false)
+        // this.$store.dispatch('setMenuVisible', false)
+        this.setMenuVisible(false)
       }
     },
     nextPage() {
       if (this.rendition) {
         this.rendition.next()
-        this.$store.dispatch('setMenuVisible', false)
+        // this.$store.dispatch('setMenuVisible', false)
+        this.setMenuVisible(false)
       }
     },
     showTitleAndMenu() {
-      this.$store.dispatch('setMenuVisible', !this.menuVisible)
+      // this.$store.dispatch('setMenuVisible', !this.menuVisible)
+      this.setMenuVisible(!this.menuVisible)
     }
   },
   mounted() {
     const baseUrl = 'http://localhost:8081/epub/'
     const fileName = this.$route.params.fileName.split('|').join('/')
-    this.$store.dispatch('setFileName', fileName).then(() => {
+    // this.$store.dispatch('setFileName', fileName).then(() => {
+    // this.initEpub()
+    // })
+    this.setFileName(fileName).then(() => {
       this.initEpub()
     })
     console.log(`${baseUrl}${fileName}.epub`)
