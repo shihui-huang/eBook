@@ -20,6 +20,7 @@ export default {
     initEpub() {
       const url = 'http://localhost:8081/epub/' + this.fileName + '.epub'
       this.book = new Epub(url)
+      this.setCurrentBook(this.book)
       console.log(this.book)
       this.rendition = this.book.renderTo('read', {
         width: innerWidth,
@@ -86,6 +87,7 @@ export default {
     showTitleAndMenu() {
       // this.$store.dispatch('setMenuVisible', !this.menuVisible)
       this.setMenuVisible(!this.menuVisible)
+      this.setSettingVisible('')
     }
   },
   mounted() {
