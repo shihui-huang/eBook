@@ -36,6 +36,14 @@
           A
         </div>
       </div>
+      <div class="setting-font-family" @click="showFontFamilyPopup">
+        <div class="setting-font-family-text-wrapper">
+          <span class="setting-font-family-text">{{ defaultFontFamily }}</span>
+        </div>
+        <div class="setting-font-family-icon-wrapper">
+          <span class="icon-forward"></span>
+        </div>
+      </div>
     </div>
   </transition>
 </template>
@@ -54,6 +62,9 @@ export default {
     setFontSize(fontSize) {
       this.setDefaultFontSize(fontSize)
       this.currentBook.rendition.themes.fontSize(fontSize + 'px')
+    },
+    showFontFamilyPopup() {
+      this.setFontFamilyVisible(true)
     }
   }
 }
@@ -66,6 +77,8 @@ export default {
   bottom: px2rem(48);
   left: 0;
   z-index: 100;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: px2rem(90);
   background: white;
@@ -73,7 +86,7 @@ export default {
   .setting-font-size {
     display: flex;
     height: 100%;
-
+    flex: 2;
     .preview {
       flex: 0 0 px2rem(40);
       @include center;
@@ -131,6 +144,19 @@ export default {
             }
           }
         }
+      }
+    }
+  }
+  .setting-font-family {
+    @include center;
+    flex: 1;
+    font-size: px2rem(14);
+    .setting-font-family-text-wrapper {
+      .setting-font-family-text {
+      }
+    }
+    .setting-font-family-icon-wrapper {
+      .icon-forward {
       }
     }
   }

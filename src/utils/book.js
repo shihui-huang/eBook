@@ -7,3 +7,11 @@ export const FONT_SIZE_LIST = [
   { fontSize: 22 },
   { fontSize: 24 }
 ]
+
+export const FONT_FAMILY_LIST = [
+  { font: 'Default' },
+  { font: 'Cabin' },
+  { font: 'Days one' },
+  { font: 'Montserrat' },
+  { font: 'Tangerine' }
+]

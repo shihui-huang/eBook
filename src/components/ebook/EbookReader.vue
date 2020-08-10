@@ -69,6 +69,14 @@ export default {
         event.preventDefault()
         event.stopPropagation()
       })
+      this.rendition.hooks.content.register((content) => {
+        Promise.all(
+          content.addStylesheet('http://localhost:8081/fonts/daysOne.css'),
+          content.addStylesheet('http://localhost:8081/fonts/cabin.css'),
+          content.addStylesheet('http://localhost:8081/fonts/montserrat.css'),
+          content.addStylesheet('http://localhost:8081/fonts/tangerine.css')
+        ).then({})
+      })
     },
     prevPage(event) {
       if (this.rendition) {
@@ -88,6 +96,7 @@ export default {
       // this.$store.dispatch('setMenuVisible', !this.menuVisible)
       this.setMenuVisible(!this.menuVisible)
       this.setSettingVisible('')
+      this.setFontFamilyVisible(false)
     }
   },
   mounted() {
