@@ -5,7 +5,7 @@
         <div class="ebook-popup-title-icon" @click="hideFontFamilySetting">
           <span class="icon-down2"></span>
         </div>
-        <div class="ebook-popup-title-text">Select font</div>
+        <div class="ebook-popup-title-text">{{ $t('book.selectFont') }}</div>
       </div>
       <div class="ebook-popup-list-wrapper">
         <div
@@ -52,14 +52,7 @@ export default {
       saveFontFamily(this.fileName, font)
     }
   },
-  mounted() {
-    // test LocalStorage API
-    // setLocalStorage('b', 'bbbb')
-    // setLocalStorage('a', 'aaaa')
-    // clearLocalStorage()
-    // setLocalStorage('b', 'bbbb')
-    // console.log(getLocalStorage('b'))
-  }
+  mounted() {}
 }
 </script>
 
