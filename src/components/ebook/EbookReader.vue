@@ -18,7 +18,8 @@ export default {
   mixins: [ebookMixin],
   methods: {
     initEpub() {
-      const url = 'http://localhost:8081/epub/' + this.fileName + '.epub'
+      const url =
+        `${process.env.VUE_APP_RES_URL}/epub/` + this.fileName + '.epub'
       this.book = new Epub(url)
       this.setCurrentBook(this.book)
       console.log(this.book)
@@ -70,12 +71,16 @@ export default {
         event.stopPropagation()
       })
       this.rendition.hooks.content.register((content) => {
-        Promise.all(
-          content.addStylesheet('http://localhost:8081/fonts/daysOne.css'),
-          content.addStylesheet('http://localhost:8081/fonts/cabin.css'),
-          content.addStylesheet('http://localhost:8081/fonts/montserrat.css'),
-          content.addStylesheet('http://localhost:8081/fonts/tangerine.css')
-        ).then({})
+        content.addStylesheet(
+          `${process.env.VUE_APP_RES_URL}/fonts/daysOne.css`
+        )
+        content.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/cabin.css`)
+        content.addStylesheet(
+          `${process.env.VUE_APP_RES_URL}/fonts/montserrat.css`
+        )
+        content.addStylesheet(
+          `${process.env.VUE_APP_RES_URL}/fonts/tangerine.css`
+        )
       })
     },
     prevPage(event) {
@@ -100,7 +105,7 @@ export default {
     }
   },
   mounted() {
-    const baseUrl = 'http://localhost:8081/epub/'
+    const baseUrl = `${process.env.VUE_APP_RES_URL}/epub/`
     const fileName = this.$route.params.fileName.split('|').join('/')
     // this.$store.dispatch('setFileName', fileName).then(() => {
     // this.initEpub()
