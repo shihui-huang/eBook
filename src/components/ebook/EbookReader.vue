@@ -38,20 +38,8 @@ export default {
         snap: true
       })
       this.rendition.display().then(() => {
-        const font = getFontFamily(this.fileName)
-        const fontSize = getFontSize(this.fileName)
-        if (!font) {
-          saveFontFamily(this.fileName, font)
-        } else {
-          this.rendition.themes.font(font)
-          this.setDefaultFontFamily(font)
-        }
-        if (!fontSize) {
-          saveFontSize(this.fileName, fontSize)
-        } else {
-          this.rendition.themes.fontSize(fontSize)
-          this.setDefaultFontSize(fontSize)
-        }
+        this.initFontSize()
+        this.initFontFamily()
       })
       // Slide to switch pages
       this.rendition.on('touchstart', (event) => {
@@ -102,6 +90,25 @@ export default {
           `${process.env.VUE_APP_RES_URL}/fonts/tangerine.css`
         )
       })
+    },
+    initFontSize() {
+      const fontSize = getFontSize(this.fileName)
+      if (!fontSize) {
+        saveFontSize(this.fileName, fontSize)
+      } else {
+        this.rendition.themes.fontSize(fontSize)
+        this.setDefaultFontSize(fontSize)
+      }
+    },
+    initFontFamily() {
+      const font = getFontFamily(this.fileName)
+
+      if (!font) {
+        saveFontFamily(this.fileName, font)
+      } else {
+        this.rendition.themes.font(font)
+        this.setDefaultFontFamily(font)
+      }
     },
     prevPage(event) {
       if (this.rendition) {
