@@ -32,6 +32,11 @@
 <script>
 import { ebookMixin } from '../..//utils/mixin'
 import { FONT_FAMILY_LIST } from '../../utils/book'
+import {
+  setLocalStorage,
+  getLocalStorage,
+  clearLocalStorage
+} from '../../utils/localStorage'
 export default {
   mixins: [ebookMixin],
   data() {
@@ -49,6 +54,14 @@ export default {
       this.hideFontFamilySetting()
       this.currentBook.rendition.themes.font(font)
     }
+  },
+  mounted() {
+    // test LocalStorage API
+    setLocalStorage('b', 'bbbb')
+    setLocalStorage('a', 'aaaa')
+    clearLocalStorage()
+    setLocalStorage('b', 'bbbb')
+    console.log(getLocalStorage('b'))
   }
 }
 </script>
