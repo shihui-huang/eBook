@@ -4,14 +4,43 @@ export function setLocalStorage(key, value) {
   return localStorage.set(key, value)
 }
 export function getLocalStorage(key, value) {
-  return localStorage.set(key, value)
-}
-export function removeLocalStorage(key) {
-  return localStorage.get(key)
+  return localStorage.get(key, value)
 }
 export function deleteLocalStorage(key) {
   return localStorage.delete(key)
 }
 export function clearLocalStorage() {
   return localStorage.clear()
+}
+export function setBookObject(fileName, key, value) {
+  let book = getLocalStorage(`${fileName} -info`)
+
+  if (!book) {
+    book = {}
+  }
+  book[key] = value
+  setLocalStorage(`${fileName} -info`, book)
+}
+export function getBookObject(fileName, key) {
+  const book = getLocalStorage(`${fileName} -info`)
+
+  if (book) {
+    return book[key]
+  } else {
+    return null
+  }
+}
+export function getFontFamily(fileName) {
+  return getBookObject(fileName, 'fontFamily')
+}
+
+export function saveFontFamily(fileName, fontFamily) {
+  setBookObject(fileName, 'fontFamily', fontFamily)
+}
+export function getFontSize(fileName) {
+  return getBookObject(fileName, 'fontSize')
+}
+
+export function saveFontSize(fileName, fontSize) {
+  setBookObject(fileName, 'fontSize', fontSize)
 }

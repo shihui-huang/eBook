@@ -51,6 +51,7 @@
 <script>
 import { ebookMixin } from '../../utils/mixin'
 import { FONT_SIZE_LIST } from '../../utils/book'
+import { saveFontSize } from '../../utils/localStorage'
 export default {
   mixins: [ebookMixin],
   data() {
@@ -61,6 +62,7 @@ export default {
   methods: {
     setFontSize(fontSize) {
       this.setDefaultFontSize(fontSize)
+      saveFontSize(this.fileName, fontSize)
       this.currentBook.rendition.themes.fontSize(fontSize + 'px')
     },
     showFontFamilyPopup() {
@@ -151,14 +153,6 @@ export default {
     @include center;
     flex: 1;
     font-size: px2rem(14);
-    .setting-font-family-text-wrapper {
-      .setting-font-family-text {
-      }
-    }
-    .setting-font-family-icon-wrapper {
-      .icon-forward {
-      }
-    }
   }
 }
 </style>

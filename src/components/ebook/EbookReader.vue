@@ -13,6 +13,12 @@
 <script>
 import { ebookMixin } from '../../utils/mixin'
 import Epub from 'epubjs'
+import {
+  getFontFamily,
+  saveFontFamily,
+  getFontSize,
+  saveFontSize
+} from '../../utils/localStorage'
 global.ePub = Epub
 export default {
   mixins: [ebookMixin],
@@ -31,9 +37,23 @@ export default {
         manager: 'continuous',
         snap: true
       })
-      this.rendition.display()
+      this.rendition.display().then(() => {
+        const font = getFontFamily(this.fileName)
+        const fontSize = getFontSize(this.fileName)
+        if (!font) {
+          saveFontFamily(this.fileName, font)
+        } else {
+          this.rendition.themes.font(font)
+          this.setDefaultFontFamily(font)
+        }
+        if (!fontSize) {
+          saveFontSize(this.fileName, fontSize)
+        } else {
+          this.rendition.themes.fontSize(fontSize)
+          this.setDefaultFontSize(fontSize)
+        }
+      })
       // Slide to switch pages
-
       this.rendition.on('touchstart', (event) => {
         console.log(event)
         // 获取一只手指点击屏幕的x轴位置
