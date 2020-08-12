@@ -51,3 +51,10 @@ export function getLocaleLanguage() {
 export function saveLocaleLanguage(localeLanguage) {
   return setLocalStorage('localeLanguage', localeLanguage)
 }
+export function getTheme() {
+  return getLocalStorage('theme')
+}
+
+export function saveTheme(theme) {
+  return setLocalStorage('theme', theme)
+}

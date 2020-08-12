@@ -12,12 +12,15 @@
 
 <script>
 import { ebookMixin } from '../../utils/mixin'
+import { themeList } from '../../utils/book'
 import Epub from 'epubjs'
 import {
   getFontFamily,
   saveFontFamily,
   getFontSize,
-  saveFontSize
+  saveFontSize,
+  getTheme,
+  saveTheme
 } from '../../utils/localStorage'
 global.ePub = Epub
 export default {
@@ -38,6 +41,7 @@ export default {
         snap: true
       })
       this.rendition.display().then(() => {
+        this.initTheme()
         this.initFontSize()
         this.initFontFamily()
       })
@@ -109,6 +113,18 @@ export default {
         this.rendition.themes.font(font)
         this.setDefaultFontFamily(font)
       }
+    },
+    initTheme() {
+      themeList(this).forEach((theme) => {
+        this.rendition.themes.register(theme.name, theme.style)
+      })
+      const theme = getTheme()
+      if (!theme) {
+        saveTheme(this.defaultTheme)
+      } else {
+        this.setDefaultTheme(theme)
+      }
+      this.rendition.themes.select(this.defaultTheme)
     },
     prevPage(event) {
       if (this.rendition) {

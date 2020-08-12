@@ -17,8 +17,9 @@ const actions = {
   setFileName: ({ commit }, fileName) => {
     return commit('SET_FILENAME', fileName)
   },
-  setMenuVisible: ({ commit }, menu) => {
-    return commit('SET_MENUVISIBLE', menu)
+  setDefaultTheme: ({ commit }, theme) => {
+    return commit('SET_DEFAULT_THEME', theme)
+  },
   }
 }
 export default actions

@@ -8,6 +8,7 @@ export const ebookMixin = {
       'defaultFontSize',
       'defaultFontFamily',
       'fontFamilyVisible',
+      'defaultTheme',
     ])
   },
   methods: {
@@ -18,6 +19,7 @@ export const ebookMixin = {
       'setDefaultFontSize',
       'setDefaultFontFamily',
       'setFontFamilyVisible',
+      'setDefaultTheme',
     ])
   }
 }
