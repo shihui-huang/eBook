@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { ebookMixin } from '../../utils/mixin'
+import { ebookMixin, initGlobalStyle } from '../../utils/mixin'
 import { themeList } from '../../utils/book'
 import Epub from 'epubjs'
 import {
@@ -44,6 +44,7 @@ export default {
         this.initTheme()
         this.initFontSize()
         this.initFontFamily()
+        initGlobalStyle(this.defaultTheme)
       })
       // Slide to switch pages
       this.rendition.on('touchstart', (event) => {
