@@ -7,6 +7,8 @@ const book = {
     defaultFontFamily: 'Default',
     fontFamilyVisible: false,
     defaultTheme: 'Default',
+    bookAvailable: false,
+    progress: 0,
   },
   mutations: {
     SET_FILENAME: (state, fileName) => {
@@ -29,6 +31,12 @@ const book = {
     },
     SET_DEFAULT_THEME: (state, theme) => {
       state.defaultTheme = theme
+    },
+    SET_BOOK_AVAILABLE: (state, bookAvailable) => {
+      state.bookAvailable = bookAvailable
+    },
+    SET_PROGRESS: (state, progress) => {
+      state.progress = progress
     }
   }
 }

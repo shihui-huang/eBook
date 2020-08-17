@@ -26,12 +26,62 @@ global.ePub = Epub
 export default {
   mixins: [ebookMixin],
   methods: {
+    onProgressChange(progress) {
+      const precentage = progress / 100
+      const location =
+        precentage > 0 ? this.locations.cfiFromProventage(precentage) : 0
+      this.rendition.display(location)
+    },
     initEpub() {
       const url =
         `${process.env.VUE_APP_RES_URL}/epub/` + this.fileName + '.epub'
       this.book = new Epub(url)
       this.setCurrentBook(this.book)
       console.log(this.book)
+      this.initRendition()
+      this.initGesture()
+      this.book.ready
+        .then(() => {
+          return this.book.locations.generate(
+            750 * (window.innerWidth / 375) * (getFontSize(this.fileName) / 16)
+          )
+        })
+        .then(() => {
+          this.setBookAvailable(true)
+        })
+    },
+    initFontSize() {
+      const fontSize = getFontSize(this.fileName)
+      if (!fontSize) {
+        saveFontSize(this.fileName, fontSize)
+      } else {
+        this.rendition.themes.fontSize(fontSize)
+        this.setDefaultFontSize(fontSize)
+      }
+    },
+    initFontFamily() {
+      const font = getFontFamily(this.fileName)
+
+      if (!font) {
+        saveFontFamily(this.fileName, font)
+      } else {
+        this.rendition.themes.font(font)
+        this.setDefaultFontFamily(font)
+      }
+    },
+    initTheme() {
+      themeList(this).forEach((theme) => {
+        this.rendition.themes.register(theme.name, theme.style)
+      })
+      const theme = getTheme()
+      if (!theme) {
+        saveTheme(this.defaultTheme)
+      } else {
+        this.setDefaultTheme(theme)
+      }
+      this.rendition.themes.select(this.defaultTheme)
+    },
+    initRendition() {
       this.rendition = this.book.renderTo('read', {
         width: innerWidth,
         height: innerHeight,
@@ -46,6 +96,20 @@ export default {
         this.initFontFamily()
         initGlobalStyle(this.defaultTheme)
       })
+      this.rendition.hooks.content.register((content) => {
+        content.addStylesheet(
+          `${process.env.VUE_APP_RES_URL}/fonts/daysOne.css`
+        )
+        content.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/cabin.css`)
+        content.addStylesheet(
+          `${process.env.VUE_APP_RES_URL}/fonts/montserrat.css`
+        )
+        content.addStylesheet(
+          `${process.env.VUE_APP_RES_URL}/fonts/tangerine.css`
+        )
+      })
+    },
+    initGesture() {
       // Slide to switch pages
       this.rendition.on('touchstart', (event) => {
         console.log(event)
@@ -83,49 +147,6 @@ export default {
         event.preventDefault()
         event.stopPropagation()
       })
-      this.rendition.hooks.content.register((content) => {
-        content.addStylesheet(
-          `${process.env.VUE_APP_RES_URL}/fonts/daysOne.css`
-        )
-        content.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/cabin.css`)
-        content.addStylesheet(
-          `${process.env.VUE_APP_RES_URL}/fonts/montserrat.css`
-        )
-        content.addStylesheet(
-          `${process.env.VUE_APP_RES_URL}/fonts/tangerine.css`
-        )
-      })
-    },
-    initFontSize() {
-      const fontSize = getFontSize(this.fileName)
-      if (!fontSize) {
-        saveFontSize(this.fileName, fontSize)
-      } else {
-        this.rendition.themes.fontSize(fontSize)
-        this.setDefaultFontSize(fontSize)
-      }
-    },
-    initFontFamily() {
-      const font = getFontFamily(this.fileName)
-
-      if (!font) {
-        saveFontFamily(this.fileName, font)
-      } else {
-        this.rendition.themes.font(font)
-        this.setDefaultFontFamily(font)
-      }
-    },
-    initTheme() {
-      themeList(this).forEach((theme) => {
-        this.rendition.themes.register(theme.name, theme.style)
-      })
-      const theme = getTheme()
-      if (!theme) {
-        saveTheme(this.defaultTheme)
-      } else {
-        this.setDefaultTheme(theme)
-      }
-      this.rendition.themes.select(this.defaultTheme)
     },
     prevPage(event) {
       if (this.rendition) {

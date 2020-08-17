@@ -9,6 +9,8 @@ export const ebookMixin = {
       'defaultFontFamily',
       'fontFamilyVisible',
       'defaultTheme',
+      'bookAvailable',
+      'progress',
     ])
   },
   methods: {
@@ -20,6 +22,8 @@ export const ebookMixin = {
       'setDefaultFontFamily',
       'setFontFamilyVisible',
       'setDefaultTheme',
+      'setBookAvailable',
+      'setProgress',
     ])
   }
 }
