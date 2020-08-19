@@ -26,6 +26,7 @@
           </div>
         </div>
         <div class="text-wrapper">
+          <span class="progress-chapter-text">{{ getChapterName }}</span>
           <span class="progress-text"
             >({{ bookAvailable ? progress + '%' : $t('book.loading') }})</span
           >
@@ -39,7 +40,21 @@
 import { ebookMixin } from '../../utils/mixin'
 export default {
   mixins: [ebookMixin],
-
+  computed: {
+    getChapterName() {
+      if (this.chapter) {
+        const chapterInfo = this.currentBook.section(this.chapter)
+        console.log(this.currentBook.navigation)
+        if (chapterInfo && chapterInfo.href) {
+          return this.currentBook.navigation.get(chapterInfo.href).label
+        } else {
+          return ''
+        }
+      } else {
+        return ''
+      }
+    }
+  },
   methods: {
     onProgressChange(progress) {
       this.setProgress(progress).then(() => {
@@ -162,7 +177,12 @@ export default {
       box-sizing: border-box;
       @include center;
       .progress-chapter-text {
+        text-overflow: ellipsis; // 文字超出变成省略号 Text that exceeds the length becomes an ellipsis
+        overflow: hidden;
+        white-space: nowrap; // 不换行
         line-height: px2rem(15);
+        padding: 0 px2rem(15);
+        box-sizing: border-box;
       }
       .progress-text {
         font-size: px2rem(12);
