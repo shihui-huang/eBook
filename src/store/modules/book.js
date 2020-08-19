@@ -9,6 +9,7 @@ const book = {
     defaultTheme: 'Default',
     bookAvailable: false,
     progress: 0,
+    chapter: 0,
   },
   mutations: {
     SET_FILENAME: (state, fileName) => {

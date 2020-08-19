@@ -78,13 +78,22 @@ export default {
       }
     },
     displayChapter() {
-      console.log(this.currentBook.section)
       const chapterInfo = this.currentBook.section(this.chapter)
       if (chapterInfo && chapterInfo.href) {
-        this.currentBook.rendition.display(chapterInfo.href)
+        this.currentBook.rendition.display(chapterInfo.href).then(() => {
+          this.refreshLocation()
+        })
       }
+    },
+    refreshLocation() {
+      const currentLocation = this.currentBook.rendition.currentLocation()
+      const progress = this.currentBook.locations.percentageFromCfi(
+        currentLocation.start.cfi
+      )
+      this.setProgress(Math.floor(progress * 100))
     }
   },
+
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
@@ -152,7 +161,7 @@ export default {
       padding: 0 px2rem(15);
       box-sizing: border-box;
       @include center;
-      .progress-section-text {
+      .progress-chapter-text {
         line-height: px2rem(15);
       }
       .progress-text {
