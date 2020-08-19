@@ -26,6 +26,12 @@ const actions = {
   setProgress: ({ commit }, progress) => {
     return commit('SET_PROGRESS', progress)
   },
+  setChapter: ({ commit }, chapter) => {
+    return commit('SET_CHAPTER', chapter)
+  },
+  setCurrentBook: ({ commit }, book) => {
+    return commit('SET_CURRENT_BOOK', book)
+  },
   }
 }
 export default actions

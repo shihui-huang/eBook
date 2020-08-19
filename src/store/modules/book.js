@@ -37,6 +37,12 @@ const book = {
     },
     SET_PROGRESS: (state, progress) => {
       state.progress = progress
+    },
+    SET_CHAPTER: (state, chapter) => {
+      state.chapter = chapter
+    },
+    SET_CURRENT_BOOK: (state, currentBook) => {
+      state.currentBook = currentBook
     }
   }
 }

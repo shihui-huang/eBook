@@ -6,6 +6,9 @@
     >
       <div class="setting-progress">
         <div class="progress-wrapper">
+          <div class="progress-icon-wrapper">
+            <span class="icon-back" @click="prevChapter()"></span>
+          </div>
           <input
             class="progress"
             type="range"
@@ -18,6 +21,9 @@
             :disabled="!bookAvailable"
             ref="progress"
           />
+          <div class="progress-icon-wrapper" @click="nextChapter()">
+            <span class="icon-forward"></span>
+          </div>
         </div>
         <div class="text-wrapper">
           <span class="progress-text"
@@ -54,7 +60,31 @@ export default {
     updateProgressBg() {
       this.$refs.progress.style.backgroundSize = `${this.progress}%100%`
     },
+    prevChapter() {
+      if (this.chapter > 0 && this.bookAvailable) {
+        this.setChapter(this.chapter - 1).then(() => {
+          this.displayChapter()
+        })
 }
+    },
+    nextChapter() {
+      if (
+        this.chapter < this.currentBook.spine.length - 1 &&
+        this.bookAvailable
+      ) {
+        this.setChapter(this.chapter + 1).then(() => {
+          this.displayChapter()
+        })
+      }
+    },
+    displayChapter() {
+      console.log(this.currentBook.section)
+      const chapterInfo = this.currentBook.section(this.chapter)
+      if (chapterInfo && chapterInfo.href) {
+        this.currentBook.rendition.display(chapterInfo.href)
+      }
+    }
+  },
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>

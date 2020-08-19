@@ -11,6 +11,8 @@ export const ebookMixin = {
       'defaultTheme',
       'bookAvailable',
       'progress',
+      'chapter',
+      'currentBook',
     ])
   },
   methods: {
@@ -24,6 +26,8 @@ export const ebookMixin = {
       'setDefaultTheme',
       'setBookAvailable',
       'setProgress',
+      'setChapter',
+      'setCurrentBook',
     ])
   }
 }
