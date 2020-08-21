@@ -5,6 +5,10 @@
       v-show="menuVisible && settingVisible === 'progress'"
     >
       <div class="setting-progress">
+        <!-- <div class="read-time-wrapper">
+          <span class="read-time-text">{{ getReadTime() }}</span>
+          <span class="icon-forward"></span>
+        </div> -->
         <div class="progress-wrapper">
           <div class="progress-icon-wrapper">
             <span class="icon-back" @click="prevChapter()"></span>
@@ -38,13 +42,14 @@
 
 <script>
 import { ebookMixin } from '../../utils/mixin'
+
 export default {
   mixins: [ebookMixin],
   computed: {
     getChapterName() {
       if (this.chapter) {
         const chapterInfo = this.currentBook.section(this.chapter)
-        console.log(this.currentBook.navigation)
+        // console.log(this.currentBook.navigation)
         if (chapterInfo && chapterInfo.href) {
           return this.currentBook.navigation.get(chapterInfo.href).label
         } else {
@@ -66,12 +71,7 @@ export default {
       this.setProgress(progress)
       this.updateProgressBg()
     },
-    displayProgress() {
-      const cfi = this.currentBook.locations.cfiFromPercentage(
-        this.progress / 100
-      )
-      this.currentBook.rendition.display(cfi)
-    },
+
     updateProgressBg() {
       this.$refs.progress.style.backgroundSize = `${this.progress}%100%`
     },
@@ -80,7 +80,7 @@ export default {
         this.setChapter(this.chapter - 1).then(() => {
           this.displayChapter()
         })
-}
+      }
     },
     nextChapter() {
       if (
@@ -91,24 +91,13 @@ export default {
           this.displayChapter()
         })
       }
-    },
-    displayChapter() {
-      const chapterInfo = this.currentBook.section(this.chapter)
-      if (chapterInfo && chapterInfo.href) {
-        this.currentBook.rendition.display(chapterInfo.href).then(() => {
-          this.refreshLocation()
-        })
-      }
-    },
-    refreshLocation() {
-      const currentLocation = this.currentBook.rendition.currentLocation()
-      const progress = this.currentBook.locations.percentageFromCfi(
-        currentLocation.start.cfi
-      )
-      this.setProgress(Math.floor(progress * 100))
     }
   },
 
+  update() {
+    this.updateProgressBg()
+  }
+}
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>

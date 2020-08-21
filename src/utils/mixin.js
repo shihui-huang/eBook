@@ -46,6 +46,47 @@ export const ebookMixin = {
     default:
       addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_default.css`)
   }
+    },
+    refreshLocation() {
+      const currentLocation = this.currentBook.rendition.currentLocation()
+      const startCfi = currentLocation.start.cfi
+      const progress = this.currentBook.locations.percentageFromCfi(startCfi)
+      this.setProgress(Math.floor(progress * 100))
+      this.setChapter(currentLocation.start.index)
+      saveLocation(this.fileName, startCfi)
+    },
+    displayProgress() {
+      const cfi = this.currentBook.locations.cfiFromPercentage(
+        this.progress / 100
+      )
+      // console.log(cfi)
+      this.display(cfi)
+    },
+    displayChapter() {
+      const chapterInfo = this.currentBook.section(this.chapter)
+      console.log(chapterInfo)
+      if (chapterInfo && chapterInfo.href) {
+        // console.log(chapterInfo.href)
+        this.display(chapterInfo.href)
+      }
+    },
+    display(location, callBackFunction) {
+      if (location) {
+        return this.currentBook.rendition.display(location).then(() => {
+          this.refreshLocation()
+          if (callBackFunction) {
+            callBackFunction()
+          }
+        })
+      } else {
+        // console.log(this.currentBook)
+        return this.currentBook.rendition.display().then(() => {
+          this.refreshLocation()
+          if (callBackFunction) {
+            callBackFunction()
+          }
+        })
+      }
     }
   }
 }

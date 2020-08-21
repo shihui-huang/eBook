@@ -58,3 +58,17 @@ export function getTheme() {
 export function saveTheme(theme) {
   return setLocalStorage('theme', theme)
 }
+export function getProgress(fileName) {
+  return getBookObject(fileName, 'progress')
+}
+
+export function saveProgress(fileName, progress) {
+  return setBookObject(fileName, 'progress', progress)
+}
+export function getLocation(fileName) {
+  return getBookObject(fileName, 'location')
+}
+
+export function saveLocation(fileName, location) {
+  return setBookObject(fileName, 'location', location)
+}

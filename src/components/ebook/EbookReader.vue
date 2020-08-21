@@ -20,7 +20,8 @@ import {
   getFontSize,
   saveFontSize,
   getTheme,
-  saveTheme
+  saveTheme,
+  getLocation
 } from '../../utils/localStorage'
 global.ePub = Epub
 export default {
@@ -48,6 +49,7 @@ export default {
         })
         .then(() => {
           this.setBookAvailable(true)
+          this.refreshLocation()
         })
     },
     initFontSize() {
@@ -90,7 +92,9 @@ export default {
         manager: 'continuous',
         snap: true
       })
-      this.rendition.display().then(() => {
+      const location = getLocation(this.fileName)
+
+      this.display(location, () => {
         this.initTheme()
         this.initFontSize()
         this.initFontFamily()
@@ -150,14 +154,18 @@ export default {
     },
     prevPage(event) {
       if (this.rendition) {
-        this.rendition.prev()
+        this.rendition.prev().then(() => {
+          this.refreshLocation()
+        })
         // this.$store.dispatch('setMenuVisible', false)
         this.setMenuVisible(false)
       }
     },
     nextPage() {
       if (this.rendition) {
-        this.rendition.next()
+        this.rendition.next().then(() => {
+          this.refreshLocation()
+        })
         // this.$store.dispatch('setMenuVisible', false)
         this.setMenuVisible(false)
       }
