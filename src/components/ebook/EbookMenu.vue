@@ -24,6 +24,7 @@
     <ebook-setting-font-family-popup></ebook-setting-font-family-popup>
     <ebook-setting-theme></ebook-setting-theme>
     <ebook-setting-progress></ebook-setting-progress>
+    <ebook-slide></ebook-slide>
   </div>
 </template>
 
@@ -32,6 +33,8 @@ import ebookSettingFontFamilyPopup from './EbookSettingFontFamilyPopup'
 import ebookSettingFont from './EbookSettingFont'
 import ebookSettingTheme from './EbookSettingTheme'
 import ebookSettingProgress from './EbookSettingProgress'
+import ebookSlide from './EbookSlide'
+
 import { ebookMixin } from '../../utils/mixin'
 export default {
   mixins: [ebookMixin],
@@ -39,7 +42,8 @@ export default {
     ebookSettingFont,
     ebookSettingFontFamilyPopup,
     ebookSettingTheme,
-    ebookSettingProgress
+    ebookSettingProgress,
+    ebookSlide
   },
   methods: {
     showSetting(key) {

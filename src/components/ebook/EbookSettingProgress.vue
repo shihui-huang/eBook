@@ -180,7 +180,6 @@ export default {
         overflow: hidden;
         white-space: nowrap; // 不换行
         line-height: px2rem(15);
-
         box-sizing: border-box;
       }
       .progress-text {

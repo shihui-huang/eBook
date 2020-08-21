@@ -13,9 +13,12 @@
 .slide-up-enter-active,
 .slide-up-leave-active,
 .popup-slide-up-enter-active,
-.popup-slide-up-leave-active {
+.popup-slide-up-leave-active,
+.menu-slide-right-enter-active,
+.menu-slide-right-leave-active {
   transition: all 0.25s linear;
 }
+
 .slide-up-enter,
 .slide-up-leave-to {
   transform: translate3d(0, px2rem(138), 0);
@@ -29,5 +32,15 @@
 .popup-slide-up-enter,
 .popup-slide-down-leave-to {
   transform: translate3d(0, 100%, 0);
+  opacity: 1;
+}
+.menu-slide-right-enter,
+.menu-slide-right-leave-to {
+  transform: translate3d(-100%, 0, 0);
+  opacity: 1;
+}
+.menu-slide-right-enter-to,
+.menu-slide-right-leave {
+  transform: translate3d(0, 0, 0);
   opacity: 1;
 }
