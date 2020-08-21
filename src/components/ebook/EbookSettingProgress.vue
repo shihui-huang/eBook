@@ -5,10 +5,9 @@
       v-show="menuVisible && settingVisible === 'progress'"
     >
       <div class="setting-progress">
-        <!-- <div class="read-time-wrapper">
-          <span class="read-time-text">{{ getReadTime() }}</span>
-          <span class="icon-forward"></span>
-        </div> -->
+        <div class="read-time-wrapper">
+          <span class="read-time-text">{{ getReadTimeText() }}</span>
+        </div>
         <div class="progress-wrapper">
           <div class="progress-icon-wrapper">
             <span class="icon-back" @click="prevChapter()"></span>
@@ -42,14 +41,13 @@
 
 <script>
 import { ebookMixin } from '../../utils/mixin'
-
+import { getReadTime } from '../../utils/localStorage'
 export default {
   mixins: [ebookMixin],
   computed: {
     getChapterName() {
       if (this.chapter) {
         const chapterInfo = this.currentBook.section(this.chapter)
-        // console.log(this.currentBook.navigation)
         if (chapterInfo && chapterInfo.href) {
           return this.currentBook.navigation.get(chapterInfo.href).label
         } else {
@@ -71,7 +69,6 @@ export default {
       this.setProgress(progress)
       this.updateProgressBg()
     },
-
     updateProgressBg() {
       this.$refs.progress.style.backgroundSize = `${this.progress}%100%`
     },
@@ -91,9 +88,22 @@ export default {
           this.displayChapter()
         })
       }
+    },
+    getReadTimeText() {
+      return this.$t('book.readTime').replace(
+        '$minute',
+        this.getReadTimeByMinute()
+      )
+    },
+    getReadTimeByMinute() {
+      const readTime = getReadTime(this.fileName)
+      if (!readTime) {
+        return 0
+      } else {
+        return Math.ceil(readTime / 60)
+      }
     }
   },
-
   update() {
     this.updateProgressBg()
   }
@@ -170,11 +180,12 @@ export default {
         overflow: hidden;
         white-space: nowrap; // 不换行
         line-height: px2rem(15);
-        padding: 0 px2rem(15);
+
         box-sizing: border-box;
       }
       .progress-text {
         font-size: px2rem(12);
+        padding: 0 px2rem(15);
       }
     }
   }
