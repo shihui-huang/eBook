@@ -28,11 +28,7 @@ export const ebookMixin = {
       'setProgress',
       'setChapter',
       'setCurrentBook',
-    ])
-  }
-}
-
-export function initGlobalStyle(defaultTheme) {
+    initGlobalStyle(defaultTheme) {
   removeAllCss()
   switch (defaultTheme) {
     case 'Default':
@@ -49,5 +45,7 @@ export function initGlobalStyle(defaultTheme) {
       break
     default:
       addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_default.css`)
+  }
+    }
   }
 }

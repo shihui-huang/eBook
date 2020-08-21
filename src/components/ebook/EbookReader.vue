@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { ebookMixin, initGlobalStyle } from '../../utils/mixin'
+import { ebookMixin } from '../../utils/mixin'
 import { themeList } from '../../utils/book'
 import Epub from 'epubjs'
 import {
@@ -94,7 +94,7 @@ export default {
         this.initTheme()
         this.initFontSize()
         this.initFontFamily()
-        initGlobalStyle(this.defaultTheme)
+        this.initGlobalStyle()
       })
       this.rendition.hooks.content.register((content) => {
         content.addStylesheet(

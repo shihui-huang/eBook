@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { ebookMixin, initGlobalStyle } from '../../utils/mixin.js'
+import { ebookMixin } from '../../utils/mixin.js'
 import { themeList } from '../../utils/book'
 import { saveTheme, getTheme } from '../../utils/localStorage'
 export default {
@@ -42,7 +42,7 @@ export default {
       this.setDefaultTheme(theme.name).then(() => {
         saveTheme(theme.name)
         this.currentBook.rendition.themes.select(this.defaultTheme)
-        initGlobalStyle(this.defaultTheme)
+        this.initGlobalStyle(this.defaultTheme)
       })
     }
   },

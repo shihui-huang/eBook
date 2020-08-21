@@ -10,6 +10,7 @@ const book = {
     bookAvailable: false,
     progress: 0,
     chapter: 0,
+    currentBook: null,
   },
   mutations: {
     SET_FILENAME: (state, fileName) => {
