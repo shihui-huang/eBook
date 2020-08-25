@@ -6,6 +6,8 @@ const messages = {
     themeGold: '雅致',
     themeProtectEye: '护眼',
     themeNight: '夜间',
+    content: '目录',
+    bookmark: '书签',
   }
 }
 

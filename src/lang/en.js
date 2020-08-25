@@ -6,6 +6,8 @@ const messages = {
     themeGold: 'Grace',
     themeProtectEye: 'Eye',
     themeNight: 'Night',
+    content: 'Contents',
+    bookmark: 'Bookmark',
   }
 }
 
