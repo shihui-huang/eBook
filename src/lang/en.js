@@ -8,6 +8,9 @@ const messages = {
     themeNight: 'Night',
     content: 'Contents',
     bookmark: 'Bookmark',
+    searchHint: 'Search from the entire book',
+    alreadyReadTime: 'already read',
+    cancel: 'Cancel'
   }
 }
 

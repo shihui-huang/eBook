@@ -41,6 +41,7 @@ export default {
       console.log(this.book)
       this.initRendition()
       this.initGesture()
+      this.parseBook()
       this.book.ready
         .then(() => {
           return this.book.locations.generate(
@@ -175,6 +176,16 @@ export default {
       this.setMenuVisible(!this.menuVisible)
       this.setSettingVisible('')
       this.setFontFamilyVisible(false)
+    },
+    parseBook() {
+      this.book.loaded.cover.then((cover) => {
+        this.book.archive.createUrl(cover).then((url) => {
+          this.setCover(url)
+        })
+      })
+      this.book.loaded.metadata.then((metadata) => {
+        this.setMetadata(metadata)
+      })
     }
   },
   mounted() {

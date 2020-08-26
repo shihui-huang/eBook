@@ -8,6 +8,9 @@ const messages = {
     themeNight: '夜间',
     content: '目录',
     bookmark: '书签',
+    searchHint: '搜索全书内容',
+    alreadyReadTime: '已读',
+    cancel: '取消'
   }
 }
 
