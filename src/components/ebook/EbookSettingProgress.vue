@@ -41,14 +41,13 @@
 
 <script>
 import { ebookMixin } from '../../utils/mixin'
-import { getReadTime } from '../../utils/localStorage'
 export default {
   mixins: [ebookMixin],
   computed: {
     getChapterName() {
       if (this.chapter) {
         const chapterInfo = this.currentBook.section(this.chapter)
-        if (chapterInfo && chapterInfo.href) {
+        if (chapterInfo && chapterInfo.href && this.currentBook.navigation) {
           return this.currentBook.navigation.get(chapterInfo.href).label
         } else {
           return ''
@@ -87,20 +86,6 @@ export default {
         this.setChapter(this.chapter + 1).then(() => {
           this.displayChapter()
         })
-      }
-    },
-    getReadTimeText() {
-      return this.$t('book.readTime').replace(
-        '$minute',
-        this.getReadTimeByMinute()
-      )
-    },
-    getReadTimeByMinute() {
-      const readTime = getReadTime(this.fileName)
-      if (!readTime) {
-        return 0
-      } else {
-        return Math.ceil(readTime / 60)
       }
     }
   },

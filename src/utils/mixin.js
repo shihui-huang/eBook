@@ -1,4 +1,6 @@
 import { mapGetters, mapActions } from 'vuex'
+import { addCss, removeAllCss, getReadTimeByMinute } from './book.js'
+import { saveLocation } from './localStorage'
 export const ebookMixin = {
   computed: {
     ...mapGetters([
@@ -87,6 +89,12 @@ export const ebookMixin = {
           }
         })
       }
+    },
+    getReadTimeText() {
+      return this.$t('book.readTime').replace(
+        '$minute',
+        getReadTimeByMinute(this.fileName)
+      )
     }
   }
 }
