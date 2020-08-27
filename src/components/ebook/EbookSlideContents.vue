@@ -32,19 +32,49 @@
         <div class="book-read-time">{{ getReadTimeText() }}</div>
       </div>
     </div>
+    <scroll
+      class="contents-list"
+      :top="156"
+      :bottom="48"
+      :ref="scroll"
+      v-show="!searchVisible"
+    >
+      <div
+        class="contents-item"
+        v-for="(item, index) in navigation"
+        :key="index"
+      >
+        <span class="item-label" :style="contentItemStyle(item)">{{
+          item.label
+        }}</span>
+        <span class="item-page"></span>
+      </div>
+    </scroll>
   </div>
 </template>
 
 <script>
 import { ebookMixin } from '../../utils/mixin'
+import Scroll from '../common/Scroll'
+import { px2rem } from '../../utils/utils'
 export default {
   mixins: [ebookMixin],
+  components: {
+    Scroll
+  },
   data() {
     return {
       searchVisible: false
     }
   },
   methods: {
+    contentItemStyle(item) {
+      // 不同级别的目录缩进
+      // indent for different level
+      return {
+        marginLeft: `${px2rem(item.level * 15)}rem`
+      }
+    },
     showSearchPage() {
       this.searchVisible = true
     },
@@ -114,6 +144,7 @@ export default {
       flex: 1;
       padding: 0 px2rem(10);
       .book-title {
+        @include ellipsis;
         font-size: px2rem(14);
         overflow: hidden;
         white-space: normal;
@@ -121,14 +152,14 @@ export default {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
-        white-space: normal;
-        text-overflow: ellipsis;
+
         word-break: keep-all;
         line-height: px2rem(16);
       }
       .book-author {
         margin-top: px2rem(5);
         width: px2rem(153.75);
+        @include ellipsis;
       }
     }
     .book-progress-wrapper {
@@ -140,6 +171,23 @@ export default {
         }
       }
       .book-read-time {
+      }
+    }
+  }
+  .contents-list {
+    padding: 0 px2rem(15);
+    box-sizing: border-box;
+    .contents-item {
+      padding: px2rem(20) 0;
+      box-sizing: border-box;
+      display: flex;
+      border-bottom: px2rem(1) solid #b8b9bb;
+      .item-label {
+        font-size: px2rem(14);
+        @include ellipsis;
+        flex: 1;
+      }
+      .item-page {
       }
     }
   }

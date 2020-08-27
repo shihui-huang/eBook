@@ -15,6 +15,7 @@ export const ebookMixin = {
       'progress',
       'chapter',
       'currentBook',
+      'navigation',
       'cover',
       'metadata',
     ])
@@ -32,6 +33,7 @@ export const ebookMixin = {
       'setProgress',
       'setChapter',
       'setCurrentBook',
+      'setNavigation',
       'setCover',
       'setMetadata',
     initGlobalStyle(defaultTheme) {

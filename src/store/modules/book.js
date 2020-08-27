@@ -11,6 +11,7 @@ const book = {
     progress: 0,
     chapter: 0,
     currentBook: null,
+    navigation: null,
     cover: null,
     metadata: null,
   },
@@ -47,6 +48,9 @@ const book = {
     },
     SET_CURRENT_BOOK: (state, currentBook) => {
       state.currentBook = currentBook
+    },
+    SET_NAVIGATION: (state, navigation) => {
+      state.navigation = navigation
     SET_COVER: (state, cover) => {
       state.cover = cover
     },

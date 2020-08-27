@@ -32,6 +32,9 @@ const actions = {
   setCurrentBook: ({ commit }, book) => {
     return commit('SET_CURRENT_BOOK', book)
   },
+  setNavigation: ({ commit }, navigation) => {
+    return commit('SET_NAVIGATION', navigation)
+  },
   setCover: ({ commit }, cover) => {
     return commit('SET_COVER', cover)
   },
