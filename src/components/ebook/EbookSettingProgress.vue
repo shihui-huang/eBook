@@ -161,9 +161,10 @@ export default {
       box-sizing: border-box;
       @include center;
       .progress-chapter-text {
-        text-overflow: ellipsis; // 文字超出变成省略号 Text that exceeds the length becomes an ellipsis
-        overflow: hidden;
-        white-space: nowrap; // 不换行
+        // text-overflow: ellipsis; // 文字超出变成省略号 Text that exceeds the length becomes an ellipsis
+        // overflow: hidden;
+        // white-space: nowrap; // 不换行
+        @include ellipsis;
         line-height: px2rem(15);
         box-sizing: border-box;
       }
