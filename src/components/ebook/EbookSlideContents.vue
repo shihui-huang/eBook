@@ -41,13 +41,14 @@
     >
       <div
         class="contents-item"
-        v-for="(item, index) in navigation"
+        v-for="(item, index) in contentList"
         :key="index"
       >
         <span
           class="item-label"
           :class="{ selected: chapter === index }"
           :style="contentItemStyle(item)"
+          @click="display(item.href, hideMenu())"
           >{{ item.label }}</span
         >
         <span class="item-page"></span>
@@ -203,7 +204,12 @@ export default {
       box-sizing: border-box;
       display: flex;
       border-bottom: px2rem(1) solid #b8b9bb;
+
       .item-label {
+        &.selected {
+          color: #346cb9;
+          font-weight: bold;
+        }
         font-size: px2rem(14);
         @include ellipsis;
         flex: 1;

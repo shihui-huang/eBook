@@ -201,7 +201,7 @@ export default {
         navItem.forEach((item) => {
           item.level = find(item)
         })
-        this.setNavigation(navItem)
+        this.setContentList(navItem)
         console.log(navItem)
       })
     }

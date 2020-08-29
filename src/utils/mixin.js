@@ -15,7 +15,7 @@ export const ebookMixin = {
       'progress',
       'chapter',
       'currentBook',
-      'navigation',
+      'contentList',
       'cover',
       'metadata',
     ])
@@ -33,7 +33,7 @@ export const ebookMixin = {
       'setProgress',
       'setChapter',
       'setCurrentBook',
-      'setNavigation',
+      'setContentList',
       'setCover',
       'setMetadata',
     initGlobalStyle(defaultTheme) {
@@ -57,11 +57,13 @@ export const ebookMixin = {
     },
     refreshLocation() {
       const currentLocation = this.currentBook.rendition.currentLocation()
+      if (this.currentLocation && this.currentLocation.start) {
       const startCfi = currentLocation.start.cfi
       const progress = this.currentBook.locations.percentageFromCfi(startCfi)
       this.setProgress(Math.floor(progress * 100))
       this.setChapter(currentLocation.start.index)
       saveLocation(this.fileName, startCfi)
+      }
     },
     displayProgress() {
       const cfi = this.currentBook.locations.cfiFromPercentage(
@@ -101,6 +103,9 @@ export const ebookMixin = {
         '$minute',
         getReadTimeByMinute(this.fileName)
       )
+    },
+    hideMenu() {
+      this.setMenuVisible(false)
     }
   }
 }

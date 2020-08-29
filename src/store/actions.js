@@ -32,8 +32,8 @@ const actions = {
   setCurrentBook: ({ commit }, book) => {
     return commit('SET_CURRENT_BOOK', book)
   },
-  setNavigation: ({ commit }, navigation) => {
-    return commit('SET_NAVIGATION', navigation)
+  setContentList: ({ commit }, contentList) => {
+    return commit('SET_CONTENT_LIST', contentList)
   },
   setCover: ({ commit }, cover) => {
     return commit('SET_COVER', cover)

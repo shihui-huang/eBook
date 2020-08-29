@@ -31,7 +31,7 @@
           </div>
         </div>
       </transition>
-      <div class="background" @click="hide()"></div>
+      <div class="background" @click="hideMenu()"></div>
     </div>
   </transition>
 </template>
@@ -50,9 +50,6 @@ export default {
     }
   },
   methods: {
-    hide() {
-      this.setMenuVisible(false)
-    },
     selectTab(e) {
       this.currentTab = e
     }

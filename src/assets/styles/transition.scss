@@ -13,12 +13,14 @@
 .slide-up-enter-active,
 .slide-up-leave-active,
 .popup-slide-up-enter-active,
-.popup-slide-up-leave-active,
-.menu-slide-right-enter-active,
-.menu-slide-right-leave-active {
+.popup-slide-up-leave-active {
   transition: all 0.25s linear;
 }
 
+.menu-slide-right-enter-active,
+.menu-slide-right-leave-active {
+  transition: all 0.45s linear;
+}
 .slide-up-enter,
 .slide-up-leave-to {
   transform: translate3d(0, px2rem(138), 0);

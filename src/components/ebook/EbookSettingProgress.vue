@@ -45,16 +45,8 @@ export default {
   mixins: [ebookMixin],
   computed: {
     getChapterName() {
-      if (this.chapter) {
-        const chapterInfo = this.currentBook.section(this.chapter)
-        if (chapterInfo && chapterInfo.href && this.currentBook.navigation) {
-          return this.currentBook.navigation.get(chapterInfo.href).label
-        } else {
-          return ''
-        }
-      } else {
-        return ''
-      }
+      return this.chapter ? this.contentList[this.chapter].label : ''
+      // this.currentBook.navigation.get(chapterInfo.href) 只能拿到一级目录 can only get the first level catalog
     }
   },
   methods: {
