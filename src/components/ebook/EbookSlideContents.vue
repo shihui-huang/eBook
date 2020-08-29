@@ -21,8 +21,8 @@
         <img :src="cover" class="cover-img" />
       </div>
       <div class="book-info-wrapper">
-        <div class="book-title">{{ metadata.title }}</div>
-        <div class="book-author">{{ metadata.creator }}</div>
+        <div class="book-title">{{ this.title }}</div>
+        <div class="book-author">{{ this.creator }}</div>
       </div>
       <div class="book-progress-wrapper">
         <div class="book-progress">
@@ -36,7 +36,7 @@
       class="contents-list"
       :top="156"
       :bottom="48"
-      :ref="scroll"
+      ref="scroll"
       v-show="!searchVisible"
     >
       <div
@@ -44,9 +44,12 @@
         v-for="(item, index) in navigation"
         :key="index"
       >
-        <span class="item-label" :style="contentItemStyle(item)">{{
-          item.label
-        }}</span>
+        <span
+          class="item-label"
+          :class="{ selected: chapter === index }"
+          :style="contentItemStyle(item)"
+          >{{ item.label }}</span
+        >
         <span class="item-page"></span>
       </div>
     </scroll>
@@ -67,16 +70,34 @@ export default {
       searchVisible: false
     }
   },
+  computed: {
+    title() {
+      if (this.metadata) {
+        return this.metadata.title
+      } else {
+        return ''
+      }
+    },
+    creator() {
+      if (this.metadata) {
+        return this.metadata.creator
+      } else {
+        return ''
+      }
+    }
+  },
   methods: {
     contentItemStyle(item) {
       // 不同级别的目录缩进
       // indent for different level
+
       return {
         marginLeft: `${px2rem(item.level * 15)}rem`
       }
     },
     showSearchPage() {
       this.searchVisible = true
+      console.log(this.metadata)
     },
     hideSearchPage() {
       this.searchVisible = false
