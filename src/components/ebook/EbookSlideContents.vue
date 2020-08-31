@@ -10,13 +10,15 @@
           type="text"
           :placeholder="$t('book.searchHint')"
           @click="showSearchPage()"
+          @keyup.enter="search()"
+          v-model="searchText"
         />
       </div>
       <div class="cancel" v-if="searchVisible" @click="hideSearchPage()">
         {{ $t('book.cancel') }}
       </div>
     </div>
-    <div class="book-wrapper">
+    <div class="book-wrapper" v-show="!searchVisible">
       <div class="cover">
         <img :src="cover" class="cover-img" />
       </div>
@@ -54,6 +56,15 @@
         <span class="item-page"></span>
       </div>
     </scroll>
+    <scroll class="search-list" :top="60" :bottom="48" v-show="searchVisible">
+      <div
+        class="search-item"
+        v-for="(item, index) in this.searchList"
+        :key="index"
+      >
+        {{ item.excerpt }}
+      </div>
+    </scroll>
   </div>
 </template>
 
@@ -68,7 +79,9 @@ export default {
   },
   data() {
     return {
-      searchVisible: false
+      searchVisible: false,
+      searchList: {},
+      searchText: ''
     }
   },
   computed: {
@@ -88,6 +101,29 @@ export default {
     }
   },
   methods: {
+    // https://github.com/futurepress/epub.js/wiki/Tips-and-Tricks-%28v0.3%29
+    doSearch(q) {
+      return Promise.all(
+        this.currentBook.spine.spineItems.map((item) =>
+          item
+            .load(this.currentBook.load.bind(this.currentBook))
+            .then(item.find.bind(item, q))
+            .finally(item.unload.bind(item))
+        )
+      ).then((results) => Promise.resolve([].concat.apply([], results)))
+    },
+    search() {
+      console.log('search')
+      if (this.searchText && this.searchText.length > 0) {
+        console.log(this.searchText)
+        this.currentBook.ready.then(() => {
+          this.doSearch(this.searchText).then((list) => {
+            this.searchList = list
+            console.log(list)
+          })
+        })
+      }
+    },
     contentItemStyle(item) {
       // 不同级别的目录缩进
       // indent for different level
@@ -98,11 +134,19 @@ export default {
     },
     showSearchPage() {
       this.searchVisible = true
-      console.log(this.metadata)
     },
     hideSearchPage() {
       this.searchVisible = false
+      this.searchText = ''
+      this.searchList = null
     }
+  },
+  mounted() {
+    // if (this.currentBook) {
+    //   this.currentBook.ready.then(() => {
+    //     this.doSearch('tests').then((list) => (this.searchList = list))
+    //   })
+    // }
   }
 }
 </script>
@@ -216,6 +260,17 @@ export default {
       }
       .item-page {
       }
+    }
+  }
+  .search-list {
+    width: 100%;
+    padding: 0 px2rem(15);
+    box-sizing: border-box;
+    .search-item {
+      font-size: px2rem(14);
+      line-height: px2rem(16);
+      padding: px2rem(20) 0;
+      box-sizing: boeder-box;
     }
   }
 }
