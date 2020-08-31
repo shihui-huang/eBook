@@ -6,7 +6,7 @@
     >
       <transition name="menu-slide-right">
         <div class="content">
-          <div class="content-page-wrapper">
+          <div class="content-page-wrapper" v-if="bookAvailable">
             <div class="content-page">
               <component
                 :is="currentTab === 'content' ? content : bookmark"
@@ -29,6 +29,9 @@
               </div>
             </div>
           </div>
+          <div class="content-page-loading" v-else>
+            <ebook-loading></ebook-loading>
+          </div>
         </div>
       </transition>
       <div class="background" @click="hideMenu()"></div>
@@ -40,6 +43,7 @@
 import { ebookMixin } from '../../utils/mixin'
 import ebookSlideContents from './EbookSlideContents'
 import ebookSlideBookmark from './EbookSlideBookmark'
+import EbookLoading from './EbookLoading'
 export default {
   mixins: [ebookMixin],
   data() {
@@ -54,9 +58,10 @@ export default {
       this.currentTab = e
     }
   },
-  component: {
+  components: {
     ebookSlideContents,
-    ebookSlideBookmark
+    ebookSlideBookmark,
+    EbookLoading
   }
 }
 </script>
@@ -98,6 +103,11 @@ export default {
           }
         }
       }
+    }
+    .content-page-loading {
+      width: 100%;
+      height: 100%;
+      @include center;
     }
   }
   .background {
