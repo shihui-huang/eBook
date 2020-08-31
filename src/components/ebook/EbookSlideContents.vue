@@ -61,7 +61,10 @@
         class="search-item"
         v-for="(item, index) in this.searchList"
         :key="index"
+        v-html="item.excerpt"
+        @click="display(item.cfi, this.highlight(item.excerpt))"
       >
+        >
         {{ item.excerpt }}
       </div>
     </scroll>
@@ -112,14 +115,23 @@ export default {
         )
       ).then((results) => Promise.resolve([].concat.apply([], results)))
     },
+    highlight(target) {
+      this.setMenuVisible(false)
+      this.currentBook.rendition.annotations.highlight(target)
+    },
     search() {
-      console.log('search')
       if (this.searchText && this.searchText.length > 0) {
         console.log(this.searchText)
         this.currentBook.ready.then(() => {
           this.doSearch(this.searchText).then((list) => {
             this.searchList = list
-            console.log(list)
+            this.searchList.map((item) => {
+              item.excerpt = item.excerpt.replace(
+                this.searchText,
+                `<span class="content-search-text">${this.searchText}</span>`
+              )
+              return item
+            })
           })
         })
       }
