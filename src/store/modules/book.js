@@ -58,7 +58,6 @@ const book = {
     SET_METADATA: (state, metadata) => {
       state.metadata = metadata
     },
-    }
   }
 }
 

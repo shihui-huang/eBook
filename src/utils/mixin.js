@@ -36,6 +36,7 @@ export const ebookMixin = {
       'setContentList',
       'setCover',
       'setMetadata',
+    ]),
     initGlobalStyle(defaultTheme) {
   removeAllCss()
   switch (defaultTheme) {

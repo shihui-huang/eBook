@@ -41,6 +41,5 @@ const actions = {
   setMetadata: ({ commit }, metadata) => {
     return commit('SET_METADATA', metadata)
   },
-  }
 }
 export default actions
