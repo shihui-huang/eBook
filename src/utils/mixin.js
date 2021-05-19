@@ -14,10 +14,15 @@ export const ebookMixin = {
       'bookAvailable',
       'progress',
       'chapter',
+      'isPaginating',
       'currentBook',
       'contentList',
       'cover',
       'metadata',
+      'paginate',
+      'pagelist',
+      'offsetY',
+      'isBookmark'
     ])
   },
   methods: {
@@ -32,37 +37,43 @@ export const ebookMixin = {
       'setBookAvailable',
       'setProgress',
       'setChapter',
+      'setIsPaginating',
       'setCurrentBook',
       'setContentList',
       'setCover',
       'setMetadata',
+      'setPaginate',
+      'setPagelist',
+      'setOffsetY',
+      'setIsBookmark'
+    ]),
     initGlobalStyle(defaultTheme) {
-  removeAllCss()
-  switch (defaultTheme) {
-    case 'Default':
-      addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_default.css`)
-      break
-    case 'Eye':
-      addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_eye.css`)
-      break
-    case 'Gold':
-      addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_gold.css`)
-      break
-    case 'Night':
-      addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_night.css`)
-      break
-    default:
-      addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_default.css`)
-  }
+      removeAllCss()
+      switch (defaultTheme) {
+        case 'Default':
+          addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_default.css`)
+          break
+        case 'Eye':
+          addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_eye.css`)
+          break
+        case 'Gold':
+          addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_gold.css`)
+          break
+        case 'Night':
+          addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_night.css`)
+          break
+        default:
+          addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_default.css`)
+      }
     },
     refreshLocation() {
       const currentLocation = this.currentBook.rendition.currentLocation()
-      if (this.currentLocation && this.currentLocation.start) {
-      const startCfi = currentLocation.start.cfi
-      const progress = this.currentBook.locations.percentageFromCfi(startCfi)
-      this.setProgress(Math.floor(progress * 100))
-      this.setChapter(currentLocation.start.index)
-      saveLocation(this.fileName, startCfi)
+      if (currentLocation.start && currentLocation.start.index) {
+        const startCfi = currentLocation.start.cfi
+        const progress = this.currentBook.locations.percentageFromCfi(startCfi)
+        this.setProgress(Math.floor(progress * 100))
+        this.setChapter(currentLocation.start.index)
+        saveLocation(this.fileName, startCfi)
       }
     },
     displayProgress() {
