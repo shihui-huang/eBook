@@ -24,5 +24,8 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Brief
+I made a static resource server using nginx, and let this app access my local folder through port 8081. <br>
+VUE_APP_RES_URL in .env.development can be modified with other ports.<br>
+baseUrl could also be modified with your folder path.<br>
+The path to use this app should be localhost:8080/(your folder path)|(epub book name)<br>
